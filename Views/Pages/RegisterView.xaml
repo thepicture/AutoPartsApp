@@ -76,7 +76,7 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <materialDesign:PackIcon Kind="User" />
+                <materialDesign:PackIcon Kind="IdentificationCard" />
                 <ComboBox SelectedItem="{Binding User.UserRole, ValidatesOnDataErrors=True}"
                           ItemsSource="{Binding UserRoles}"
                           DisplayMemberPath="Title"
@@ -88,11 +88,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <materialDesign:PackIcon Kind="User" />
+                <materialDesign:PackIcon Kind="Password" />
                 <TextBox Text="{Binding User.Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                          Foreground="Transparent"
                          Grid.Column="1"
-                         IsHitTestVisible="False" />
+                         Focusable="False" />
                 <PasswordBox Background="Transparent"
                              materialDesign:HintAssist.Hint="Введите пароль"
                              Grid.Column="1"

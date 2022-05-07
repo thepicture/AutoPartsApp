@@ -24,7 +24,7 @@
               Header="Авторизоваться"
               VerticalAlignment="Center"
               MaxWidth="500">
-        <StackPanel>
+        <StackPanel FocusManager.FocusedElement="{Binding ElementName=TBoxEmail}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -32,6 +32,7 @@
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Kind="Email" />
                 <TextBox Text="{Binding User.Email}"
+                         Name="TBoxEmail"
                          materialDesign:HintAssist.Hint="Введите электронную почту"
                          MaxLength="100"
                          Grid.Column="1"
@@ -42,11 +43,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <materialDesign:PackIcon Kind="User" />
+                <materialDesign:PackIcon Kind="Password" />
                 <TextBox Text="{Binding User.Password}"
                          Foreground="Transparent"
                          Grid.Column="1"
-                         IsHitTestVisible="False" />
+                         Focusable="False" />
                 <PasswordBox Background="Transparent"
                              materialDesign:HintAssist.Hint="Введите пароль"
                              Grid.Column="1"

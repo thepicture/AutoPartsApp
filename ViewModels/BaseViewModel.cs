@@ -23,15 +23,12 @@ namespace AutoPartsApp.ViewModels
            DependencyService.Get<IHashGenerator>();
         public IRepository<LoginUser> LoginRepository =>
            DependencyService.Get<IRepository<LoginUser>>();
+        public IRepository<User> UserRepository =>
+           DependencyService.Get<IRepository<User>>();
 
         public bool IsBusy { get; set; }
         public bool IsNotBusy => !IsBusy;
         public bool IsRefreshing { get; set; }
-
-        public BaseViewModel()
-        {
-
-        }
 
         public string Title { get; set; }
 

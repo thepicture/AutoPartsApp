@@ -21,13 +21,16 @@ namespace AutoPartsApp
             DependencyService.Register<RegistrationRepository>();
             DependencyService.Register<HashGenerator>();
             DependencyService.Register<LoginRepository>();
+            DependencyService.Register<UserRepository>();
 
             DependencyService.Get<INavigationService<BaseViewModel>>()
                    .Navigate<LoginViewModel>();
             if (!string.IsNullOrWhiteSpace(
                 Settings.Default.SerializedIdentity))
             {
-                // TODO: Navigate to the auto parts page
+                DependencyService
+                    .Get<INavigationService<BaseViewModel>>()
+                    .Navigate<AccountViewModel>();
             }
         }
     }

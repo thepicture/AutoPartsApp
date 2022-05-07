@@ -30,17 +30,20 @@ namespace AutoPartsApp.Services
                                       inputSalt: currentUser.Salt);
                         if (Enumerable.SequenceEqual(currentUser.PasswordHash, hash))
                         {
-                            entities.SaveChanges();
+                            currentUser.Password = item.Password;
+                            DependencyService
+                            .Get<IIdentity<User>>()
+                            .WeakTarget = currentUser;
                             DependencyService
                                 .Get<IFeedbackService>()
-                                .InformAsync($"Вы вошли в аккаунт с ролью {currentUser.UserRole.Title}");
+                                .InformAsync($"Вы вошли как {currentUser.UserRole.Title.ToLower()}");
                             return true;
                         }
                     }
                 }
                 DependencyService
                     .Get<IFeedbackService>()
-                    .InformAsync($"Неверная электронная почта или пароль");
+                    .InformErrorAsync($"Неверная электронная почта или пароль");
                 return false;
             });
         }

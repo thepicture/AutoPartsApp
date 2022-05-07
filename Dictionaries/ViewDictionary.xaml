@@ -8,4 +8,7 @@
     <DataTemplate DataType="{x:Type viewmodels:RegisterViewModel}">
         <views:RegisterView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:AccountViewModel}">
+        <views:AccountView />
+    </DataTemplate>
 </ResourceDictionary>

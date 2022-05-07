@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoPartsApp"
         xmlns:viewmodels="clr-namespace:AutoPartsApp.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="{Binding CurrentViewModel.Title}"
         Height="750" 
         Width="1000"
         WindowStartupLocation="CenterScreen"

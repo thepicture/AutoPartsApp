@@ -52,6 +52,7 @@ namespace AutoPartsApp.ViewModels
             IsBusy = true;
             if (await LoginRepository.CreateAsync(User))
             {
+                NavigationService.Navigate<AccountViewModel>();
             }
             IsBusy = false;
         }

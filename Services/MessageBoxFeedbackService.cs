@@ -13,7 +13,9 @@ namespace AutoPartsApp.Services
                 return MessageBox.Show(questionAsString,
                                        "Вопрос",
                                        MessageBoxButton.YesNo,
-                                       MessageBoxImage.Question)
+                                       MessageBoxImage.Question,
+                                       MessageBoxResult.No,
+                                       MessageBoxOptions.DefaultDesktopOnly)
                     == MessageBoxResult.Yes;
             });
         }
@@ -24,9 +26,11 @@ namespace AutoPartsApp.Services
             await Task.Run(() =>
             {
                 return MessageBox.Show(informationAsString,
-                                "Информация",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Information);
+                                       "Информация",
+                                       MessageBoxButton.OK,
+                                       MessageBoxImage.Information,
+                                       MessageBoxResult.OK,
+                                       MessageBoxOptions.DefaultDesktopOnly);
             });
         }
 
@@ -36,9 +40,11 @@ namespace AutoPartsApp.Services
             await Task.Run(() =>
             {
                 return MessageBox.Show(errorAsString,
-                                "Ошибка",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
+                                       "Ошибка",
+                                       MessageBoxButton.OK,
+                                       MessageBoxImage.Error,
+                                       MessageBoxResult.OK,
+                                       MessageBoxOptions.DefaultDesktopOnly);
             });
         }
 
@@ -50,7 +56,9 @@ namespace AutoPartsApp.Services
                 return MessageBox.Show(warningAsString,
                                        "Предупреждение",
                                        MessageBoxButton.OK,
-                                       MessageBoxImage.Warning);
+                                       MessageBoxImage.Warning,
+                                       MessageBoxResult.OK,
+                                       MessageBoxOptions.DefaultDesktopOnly);
             });
         }
     }
