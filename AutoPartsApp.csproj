@@ -88,11 +88,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\CatalogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\ViewDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\AccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\CatalogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -113,6 +121,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Controls\CatalogControl.xaml.cs">
+      <DependentUpon>CatalogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\BaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -128,12 +139,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Manufacturer.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Part.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Provider.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\User.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\UserRole.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partial\PartialPart.cs" />
     <Compile Include="Models\Partial\PartialUser.cs" />
     <Compile Include="Models\Specific\LoginUser.cs" />
     <Compile Include="Models\Specific\RegisterUser.cs" />
@@ -153,17 +174,22 @@
     <Compile Include="Services\LoginRepository.cs" />
     <Compile Include="Services\MessageBoxFeedbackService.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\PartRepository.cs" />
     <Compile Include="Services\RegistrationRepository.cs" />
     <Compile Include="Services\UserRepository.cs" />
     <Compile Include="Services\UserRoleRepository.cs" />
     <Compile Include="Utils\ObservableStack.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Views\Pages\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\CatalogView.xaml.cs">
+      <DependentUpon>CatalogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>

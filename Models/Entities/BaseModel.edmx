@@ -5,6 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AutoPartsBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InnerCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BaseCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProviderId" Type="int" Nullable="false" />
+          <Property Name="ManufacturerId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CountInStock" Type="int" Nullable="false" />
+          <Property Name="PriceOfStockInRubles" Type="money" Nullable="false" />
+          <Property Name="PricePerUnitInRubles" Type="money" Nullable="false" />
+          <Property Name="Image" Type="image" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -26,6 +55,30 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Part_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+          <End Role="Part" Type="Self.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Part_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="1" />
+          <End Role="Part" Type="Self.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_UserRole">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -39,8 +92,19 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AutoPartsBaseModelStoreContainer">
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Part" EntityType="Self.Part" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Part_Manufacturer" Association="Self.FK_Part_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Part" EntitySet="Part" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Part_Provider" Association="Self.FK_Part_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="Part" EntitySet="Part" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="Self.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="User" EntitySet="User" />
@@ -51,13 +115,57 @@
     <edmx:ConceptualModels>
       <Schema Namespace="AutoPartsBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AutoPartsBaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Manufacturers" EntityType="AutoPartsBaseModel.Manufacturer" />
+          <EntitySet Name="Parts" EntityType="AutoPartsBaseModel.Part" />
+          <EntitySet Name="Providers" EntityType="AutoPartsBaseModel.Provider" />
           <EntitySet Name="Users" EntityType="AutoPartsBaseModel.User" />
           <EntitySet Name="UserRoles" EntityType="AutoPartsBaseModel.UserRole" />
+          <AssociationSet Name="FK_Part_Manufacturer" Association="AutoPartsBaseModel.FK_Part_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="Part" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Part_Provider" Association="AutoPartsBaseModel.FK_Part_Provider">
+            <End Role="Provider" EntitySet="Providers" />
+            <End Role="Part" EntitySet="Parts" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="AutoPartsBaseModel.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Parts" Relationship="AutoPartsBaseModel.FK_Part_Manufacturer" FromRole="Manufacturer" ToRole="Part" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InnerCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BaseCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderId" Type="Int32" Nullable="false" />
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountInStock" Type="Int32" Nullable="false" />
+          <Property Name="PriceOfStockInRubles" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PricePerUnitInRubles" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Manufacturer" Relationship="AutoPartsBaseModel.FK_Part_Manufacturer" FromRole="Part" ToRole="Manufacturer" />
+          <NavigationProperty Name="Provider" Relationship="AutoPartsBaseModel.FK_Part_Provider" FromRole="Part" ToRole="Provider" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Parts" Relationship="AutoPartsBaseModel.FK_Part_Provider" FromRole="Provider" ToRole="Part" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,6 +189,30 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="AutoPartsBaseModel.FK_User_UserRole" FromRole="UserRole" ToRole="User" />
         </EntityType>
+        <Association Name="FK_Part_Manufacturer">
+          <End Type="AutoPartsBaseModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+          <End Type="AutoPartsBaseModel.Part" Role="Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Part_Provider">
+          <End Type="AutoPartsBaseModel.Provider" Role="Provider" Multiplicity="1" />
+          <End Type="AutoPartsBaseModel.Part" Role="Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_UserRole">
           <End Type="AutoPartsBaseModel.UserRole" Role="UserRole" Multiplicity="1" />
           <End Type="AutoPartsBaseModel.User" Role="User" Multiplicity="*" />
@@ -99,6 +231,38 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AutoPartsBaseModelStoreContainer" CdmEntityContainer="AutoPartsBaseEntities">
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="AutoPartsBaseModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="AutoPartsBaseModel.Part">
+              <MappingFragment StoreEntitySet="Part">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="PricePerUnitInRubles" ColumnName="PricePerUnitInRubles" />
+                <ScalarProperty Name="PriceOfStockInRubles" ColumnName="PriceOfStockInRubles" />
+                <ScalarProperty Name="CountInStock" ColumnName="CountInStock" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+                <ScalarProperty Name="BaseCode" ColumnName="BaseCode" />
+                <ScalarProperty Name="InnerCode" ColumnName="InnerCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Providers">
+            <EntityTypeMapping TypeName="AutoPartsBaseModel.Provider">
+              <MappingFragment StoreEntitySet="Provider">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="AutoPartsBaseModel.User">
               <MappingFragment StoreEntitySet="User">

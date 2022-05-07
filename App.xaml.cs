@@ -22,6 +22,7 @@ namespace AutoPartsApp
             DependencyService.Register<HashGenerator>();
             DependencyService.Register<LoginRepository>();
             DependencyService.Register<UserRepository>();
+            DependencyService.Register<PartRepository>();
 
             DependencyService.Get<INavigationService<BaseViewModel>>()
                    .Navigate<LoginViewModel>();

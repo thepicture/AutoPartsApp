@@ -7,7 +7,7 @@
              xmlns:viewmodels="clr-namespace:AutoPartsApp.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:AccountViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="450"
+             d:DesignHeight="850"
              d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -21,10 +21,16 @@
     <UserControl.DataContext>
         <viewmodels:AccountViewModel />
     </UserControl.DataContext>
-    <Grid>
-        <GroupBox Style="{StaticResource MaterialDesignCardGroupBox}"
-                  Header="Ввод данных"
-                  VerticalAlignment="Center"
+    <StackPanel VerticalAlignment="Center">
+        <GroupBox Header="Панель управления"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  MaxWidth="500"
+                  Margin="0 0 0 50">
+            <Button Command="{Binding GoToCatalogViewModel}"
+                    Content="Каталог" />
+        </GroupBox>
+        <GroupBox Header="Ввод данных"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
                   MaxWidth="500">
             <StackPanel>
                 <Grid>
@@ -97,8 +103,8 @@
                     <PasswordBox Name="PBoxPassword"
                                  Background="Transparent"
                                  materialDesign:HintAssist.Hint="Введите пароль"
-                                 Grid.Column="1" 
-                                 PasswordChanged="OnPasswordChanged"/>
+                                 Grid.Column="1"
+                                 PasswordChanged="OnPasswordChanged" />
                 </Grid>
                 <Ellipse Height="100"
                          Width="100">
@@ -123,5 +129,5 @@
                         Content="Сохранить изменения" />
             </StackPanel>
         </GroupBox>
-    </Grid>
+    </StackPanel>
 </UserControl>

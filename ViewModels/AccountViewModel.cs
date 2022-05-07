@@ -64,5 +64,23 @@ namespace AutoPartsApp.ViewModels
                 await FeedbackService.InformAsync("Фото изменено");
             }
         }
+
+        private Command goToCatalogViewModel;
+
+        public ICommand GoToCatalogViewModel
+        {
+            get
+            {
+                if (goToCatalogViewModel == null)
+                    goToCatalogViewModel = new Command(PerformGoToCatalogViewModel);
+
+                return goToCatalogViewModel;
+            }
+        }
+
+        private void PerformGoToCatalogViewModel()
+        {
+            NavigationService.Navigate<CatalogViewModel>();
+        }
     }
 }
