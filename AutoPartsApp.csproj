@@ -146,6 +146,7 @@
     <Compile Include="Services\IIdentity.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\IRepository.cs" />
+    <Compile Include="Services\LoginRepository.cs" />
     <Compile Include="Services\MessageBoxFeedbackService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\RegistrationRepository.cs" />

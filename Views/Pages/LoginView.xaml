@@ -8,12 +8,57 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}">
     <UserControl.DataContext>
         <viewmodels:LoginViewModel />
     </UserControl.DataContext>
-    <Grid>
-        <Button Command="{Binding GoToRegisterViewModelCommand}"
-                Content="Регистрация" />
-    </Grid>
+    <GroupBox Style="{StaticResource MaterialDesignCardGroupBox}"
+              Header="Авторизоваться"
+              VerticalAlignment="Center"
+              MaxWidth="500">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Kind="Email" />
+                <TextBox Text="{Binding User.Email}"
+                         materialDesign:HintAssist.Hint="Введите электронную почту"
+                         MaxLength="100"
+                         Grid.Column="1"
+                         materialDesign:ValidationAssist.UsePopup="True" />
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Kind="User" />
+                <TextBox Text="{Binding User.Password}"
+                         Foreground="Transparent"
+                         Grid.Column="1"
+                         IsHitTestVisible="False" />
+                <PasswordBox Background="Transparent"
+                             materialDesign:HintAssist.Hint="Введите пароль"
+                             Grid.Column="1"
+                             PasswordChanged="OnPasswordChanged" />
+            </Grid>
+            <Button Command="{Binding LoginCommand}"
+                    Content="Войти" />
+            <Button Command="{Binding GoToRegisterViewModelCommand}"
+                    Content="Cоздать аккаунт"
+                    Style="{StaticResource  MaterialDesignFlatSecondaryLightButton}" />
+            <ProgressBar Opacity="{Binding IsBusy}"
+                         IsIndeterminate="True" />
+        </StackPanel>
+    </GroupBox>
 </UserControl>

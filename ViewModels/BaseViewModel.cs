@@ -21,6 +21,8 @@ namespace AutoPartsApp.ViewModels
            DependencyService.Get<IRepository<RegisterUser>>();
         public IHashGenerator HashGenerator =>
            DependencyService.Get<IHashGenerator>();
+        public IRepository<LoginUser> LoginRepository =>
+           DependencyService.Get<IRepository<LoginUser>>();
 
         public bool IsBusy { get; set; }
         public bool IsNotBusy => !IsBusy;
