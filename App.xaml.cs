@@ -1,6 +1,8 @@
-﻿using AutoPartsApp.Properties;
+﻿using AutoPartsApp.Models.Entities;
+using AutoPartsApp.Properties;
 using AutoPartsApp.Services;
 using AutoPartsApp.ViewModels;
+using System;
 using System.Windows;
 
 namespace AutoPartsApp
@@ -13,8 +15,26 @@ namespace AutoPartsApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            DependencyService.Register<NavigationService>();
+
             DependencyService.Register<MessageBoxFeedbackService>();
+            try
+            {
+                using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
+                {
+                    entities.Database.Connection.Open();
+                }
+            }
+            catch (Exception)
+            {
+                DependencyService
+                    .Get<IFeedbackService>()
+                    .InformErrorAsync("Проверьте подключение к базе данных")
+                    .Wait();
+                return;
+            }
+
+            DependencyService.Register<NavigationService>();
+
             DependencyService.Register<Identity>();
 
             DependencyService.Register<UserRoleRepository>();
