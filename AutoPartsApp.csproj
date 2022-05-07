@@ -100,6 +100,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\AnalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\CatalogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +184,7 @@
     <Compile Include="Services\UserRoleRepository.cs" />
     <Compile Include="Utils\ObservableStack.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\AnalogViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -187,6 +192,9 @@
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Views\Pages\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\AnalogView.xaml.cs">
+      <DependentUpon>AnalogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>

@@ -14,6 +14,18 @@ namespace AutoPartsApp.Controls
     {
 
 
+        public bool IsAnalogue
+        {
+            get { return (bool)GetValue(IsAnalogueProperty); }
+            set { SetValue(IsAnalogueProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsAnalogueProperty =
+            DependencyProperty.Register("IsAnalogue",
+                                        typeof(bool),
+                                        typeof(CatalogControl),
+                                        new PropertyMetadata(default(bool)));
+
 
         public ObservableCollection<Part> Parts
         {

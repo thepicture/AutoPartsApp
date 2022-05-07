@@ -17,9 +17,6 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}">
-    <UserControl.DataContext>
-        <viewmodels:LoginViewModel />
-    </UserControl.DataContext>
     <GroupBox Style="{StaticResource MaterialDesignCardGroupBox}"
               Header="Авторизоваться"
               VerticalAlignment="Center"

@@ -18,9 +18,6 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              Loaded="OnLoaded">
-    <UserControl.DataContext>
-        <viewmodels:AccountViewModel />
-    </UserControl.DataContext>
     <StackPanel VerticalAlignment="Center">
         <GroupBox Header="Панель управления"
                   Style="{StaticResource MaterialDesignCardGroupBox}"

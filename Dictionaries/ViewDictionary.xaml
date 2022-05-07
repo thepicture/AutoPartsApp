@@ -14,4 +14,7 @@
     <DataTemplate DataType="{x:Type viewmodels:CatalogViewModel}">
         <views:CatalogView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:AnalogViewModel}">
+        <views:AnalogView />
+    </DataTemplate>
 </ResourceDictionary>
