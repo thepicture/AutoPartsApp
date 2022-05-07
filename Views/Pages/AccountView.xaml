@@ -22,9 +22,15 @@
         <GroupBox Header="Панель управления"
                   Style="{StaticResource MaterialDesignCardGroupBox}"
                   MaxWidth="500"
-                  Margin="0 0 0 50">
-            <Button Command="{Binding GoToCatalogViewModel}"
-                    Content="Каталог" />
+                  Margin="0 0 0 20">
+            <StackPanel>
+                <Button Command="{Binding GoToCatalogViewModel}"
+                        Content="Каталог" 
+                        Margin="5"/>
+                <Button Command="{Binding GoToContactsViewModel}"
+                        Content="Контакты" 
+                        Margin="5"/>
+            </StackPanel>
         </GroupBox>
         <GroupBox Header="Ввод данных"
                   Style="{StaticResource MaterialDesignCardGroupBox}"

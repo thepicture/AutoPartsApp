@@ -23,6 +23,7 @@ namespace AutoPartsApp
             DependencyService.Register<LoginRepository>();
             DependencyService.Register<UserRepository>();
             DependencyService.Register<PartRepository>();
+            DependencyService.Register<ContactsRepository>();
 
             DependencyService.Get<INavigationService<BaseViewModel>>()
                    .Navigate<LoginViewModel>();

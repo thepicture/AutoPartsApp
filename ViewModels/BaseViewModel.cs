@@ -28,7 +28,9 @@ namespace AutoPartsApp.ViewModels
         public IRepository<User> UserRepository =>
            DependencyService.Get<IRepository<User>>();
         public IRepository<Part> PartRepository =>
-          DependencyService.Get<IRepository<Part>>();
+           DependencyService.Get<IRepository<Part>>();
+        public IRepository<Contact> ContactsRepository =>
+           DependencyService.Get<IRepository<Contact>>();
 
         public bool IsBusy { get; set; }
         public bool IsNotBusy => !IsBusy;

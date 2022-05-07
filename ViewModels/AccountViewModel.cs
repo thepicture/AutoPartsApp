@@ -82,5 +82,23 @@ namespace AutoPartsApp.ViewModels
         {
             NavigationService.Navigate<CatalogViewModel>();
         }
+
+        private Command goToContactsViewModel;
+
+        public ICommand GoToContactsViewModel
+        {
+            get
+            {
+                if (goToContactsViewModel == null)
+                    goToContactsViewModel = new Command(PerformGoToContactsViewModel);
+
+                return goToContactsViewModel;
+            }
+        }
+
+        private void PerformGoToContactsViewModel()
+        {
+            NavigationService.Navigate<ContactsViewModel>();
+        }
     }
 }

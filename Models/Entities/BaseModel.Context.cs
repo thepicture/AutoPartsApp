@@ -25,6 +25,7 @@ namespace AutoPartsApp.Models.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Part> Parts { get; set; }
         public virtual DbSet<Provider> Providers { get; set; }

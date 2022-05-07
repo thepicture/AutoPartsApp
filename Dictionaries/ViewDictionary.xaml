@@ -17,4 +17,7 @@
     <DataTemplate DataType="{x:Type viewmodels:AnalogViewModel}">
         <views:AnalogView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:ContactsViewModel}">
+        <views:ContactsView />
+    </DataTemplate>
 </ResourceDictionary>
