@@ -100,5 +100,23 @@ namespace AutoPartsApp.ViewModels
         {
             NavigationService.Navigate<ContactsViewModel>();
         }
+
+        private Command goToFeedbackViewModel;
+
+        public ICommand GoToFeedbackViewModel
+        {
+            get
+            {
+                if (goToFeedbackViewModel == null)
+                    goToFeedbackViewModel = new Command(PerformGoToFeedbackViewModel);
+
+                return goToFeedbackViewModel;
+            }
+        }
+
+        private void PerformGoToFeedbackViewModel()
+        {
+            NavigationService.Navigate<FeedbackViewModel>();
+        }
     }
 }

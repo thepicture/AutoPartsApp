@@ -30,6 +30,9 @@
                 <Button Command="{Binding GoToContactsViewModel}"
                         Content="Контакты" 
                         Margin="5"/>
+                <Button Command="{Binding GoToFeedbackViewModel}"
+                        Content="Обратная связь"
+                        Margin="5" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Ввод данных"

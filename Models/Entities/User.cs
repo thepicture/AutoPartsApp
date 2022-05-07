@@ -14,6 +14,13 @@ namespace AutoPartsApp.Models.Entities
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Feedbacks = new HashSet<Feedback>();
+            this.Feedbacks1 = new HashSet<Feedback>();
+        }
+    
         public int Id { get; set; }
         public string Email { get; set; }
         public string LastName { get; set; }
@@ -24,6 +31,10 @@ namespace AutoPartsApp.Models.Entities
         public byte[] Salt { get; set; }
         public byte[] Image { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Feedback> Feedbacks1 { get; set; }
         public virtual UserRole UserRole { get; set; }
     }
 }

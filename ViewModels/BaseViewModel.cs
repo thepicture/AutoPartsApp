@@ -31,6 +31,8 @@ namespace AutoPartsApp.ViewModels
            DependencyService.Get<IRepository<Part>>();
         public IRepository<Contact> ContactsRepository =>
            DependencyService.Get<IRepository<Contact>>();
+        public IRepository<Feedback> FeedbackRepository =>
+           DependencyService.Get<IRepository<Feedback>>();
 
         public bool IsBusy { get; set; }
         public bool IsNotBusy => !IsBusy;

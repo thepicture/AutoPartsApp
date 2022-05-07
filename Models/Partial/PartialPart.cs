@@ -1,4 +1,4 @@
-﻿namespace AutoPartsApp.Models.Partial
+﻿namespace AutoPartsApp.Models.Entities
 {
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public partial class Part

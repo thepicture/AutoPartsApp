@@ -1,6 +1,8 @@
 ﻿using AutoPartsApp.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AutoPartsApp.Services
@@ -17,9 +19,17 @@ namespace AutoPartsApp.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
+                {
+                    return entities.Users
+                    .Include(u => u.UserRole)
+                    .ToList();
+                }
+            });
         }
 
         public Task<User> GetSingleAsync(object id)

@@ -20,4 +20,7 @@
     <DataTemplate DataType="{x:Type viewmodels:ContactsViewModel}">
         <views:ContactsView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:FeedbackViewModel}">
+        <views:FeedbackView/>
+    </DataTemplate>
 </ResourceDictionary>

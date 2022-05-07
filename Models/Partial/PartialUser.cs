@@ -71,6 +71,21 @@ namespace AutoPartsApp.Models.Entities
             }
         }
 
+        public string FullName
+        {
+            get
+            {
+                if (Patronymic == null)
+                {
+                    return LastName + " " + FirstName;
+                }
+                else
+                {
+                    return LastName + " " + FirstName + " " + Patronymic;
+                }
+            }
+        }
+
         public string Error => throw new System.NotImplementedException();
     }
 }

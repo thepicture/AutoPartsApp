@@ -26,6 +26,7 @@ namespace AutoPartsApp.Models.Entities
         }
     
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Part> Parts { get; set; }
         public virtual DbSet<Provider> Providers { get; set; }

@@ -15,6 +15,16 @@
           <Property Name="WorkTo" Type="time" Precision="7" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderUserId" Type="int" Nullable="false" />
+          <Property Name="ReceiverUserId" Type="int" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="PostingDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
             <PropertyRef Name="Id" />
@@ -65,6 +75,30 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Feedback_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="SenderUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="ReceiverUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Part_Manufacturer">
           <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
           <End Role="Part" Type="Self.Part" Multiplicity="*" />
@@ -103,11 +137,20 @@
         </Association>
         <EntityContainer Name="AutoPartsBaseModelStoreContainer">
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Part" EntityType="Self.Part" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Feedback_User" Association="Self.FK_Feedback_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_User1" Association="Self.FK_Feedback_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
           <AssociationSet Name="FK_Part_Manufacturer" Association="Self.FK_Part_Manufacturer">
             <End Role="Manufacturer" EntitySet="Manufacturer" />
             <End Role="Part" EntitySet="Part" />
@@ -127,11 +170,20 @@
       <Schema Namespace="AutoPartsBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AutoPartsBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Contacts" EntityType="AutoPartsBaseModel.Contact" />
+          <EntitySet Name="Feedbacks" EntityType="AutoPartsBaseModel.Feedback" />
           <EntitySet Name="Manufacturers" EntityType="AutoPartsBaseModel.Manufacturer" />
           <EntitySet Name="Parts" EntityType="AutoPartsBaseModel.Part" />
           <EntitySet Name="Providers" EntityType="AutoPartsBaseModel.Provider" />
           <EntitySet Name="Users" EntityType="AutoPartsBaseModel.User" />
           <EntitySet Name="UserRoles" EntityType="AutoPartsBaseModel.UserRole" />
+          <AssociationSet Name="FK_Feedback_User" Association="AutoPartsBaseModel.FK_Feedback_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_User1" Association="AutoPartsBaseModel.FK_Feedback_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
           <AssociationSet Name="FK_Part_Manufacturer" Association="AutoPartsBaseModel.FK_Part_Manufacturer">
             <End Role="Manufacturer" EntitySet="Manufacturers" />
             <End Role="Part" EntitySet="Parts" />
@@ -154,6 +206,18 @@
           <Property Name="WorkFrom" Type="Time" Nullable="false" Precision="7" />
           <Property Name="WorkTo" Type="Time" Nullable="false" Precision="7" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderUserId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverUserId" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="PostingDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="AutoPartsBaseModel.FK_Feedback_User" FromRole="Feedback" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="AutoPartsBaseModel.FK_Feedback_User1" FromRole="Feedback" ToRole="User" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -201,6 +265,8 @@
           <Property Name="PasswordHash" Type="Binary" Nullable="false" MaxLength="1024" FixedLength="false" />
           <Property Name="Salt" Type="Binary" Nullable="false" MaxLength="1024" FixedLength="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Feedbacks" Relationship="AutoPartsBaseModel.FK_Feedback_User" FromRole="User" ToRole="Feedback" />
+          <NavigationProperty Name="Feedbacks1" Relationship="AutoPartsBaseModel.FK_Feedback_User1" FromRole="User" ToRole="Feedback" />
           <NavigationProperty Name="UserRole" Relationship="AutoPartsBaseModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="UserRole">
@@ -211,6 +277,30 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="AutoPartsBaseModel.FK_User_UserRole" FromRole="UserRole" ToRole="User" />
         </EntityType>
+        <Association Name="FK_Feedback_User">
+          <End Type="AutoPartsBaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="AutoPartsBaseModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="SenderUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_User1">
+          <End Type="AutoPartsBaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="AutoPartsBaseModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="ReceiverUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Part_Manufacturer">
           <End Type="AutoPartsBaseModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
           <End Type="AutoPartsBaseModel.Part" Role="Part" Multiplicity="*" />
@@ -260,6 +350,17 @@
                 <ScalarProperty Name="WorkTo" ColumnName="WorkTo" />
                 <ScalarProperty Name="WorkFrom" ColumnName="WorkFrom" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="AutoPartsBaseModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="PostingDateTime" ColumnName="PostingDateTime" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ReceiverUserId" ColumnName="ReceiverUserId" />
+                <ScalarProperty Name="SenderUserId" ColumnName="SenderUserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
