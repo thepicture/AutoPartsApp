@@ -18,7 +18,23 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}">
-    <ScrollViewer Grid.Row="1">
-        <controls:CatalogControl Parts="{Binding Parts}" />
-    </ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="2"
+                     Margin="5"
+                     VerticalAlignment="Center">
+            <TextBox Text="{Binding PriceSearchTextInRubles, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Поиск по цене"
+                     materialDesign:HintAssist.HelperText="* в рублях" />
+            <TextBox Text="{Binding BaseCodeSearchText, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Поиск по основному коду в аналогах"
+                     materialDesign:HintAssist.HelperText="* в рублях" />
+        </UniformGrid>
+        <ScrollViewer Grid.Row="1">
+            <controls:CatalogControl Parts="{Binding Parts}" />
+        </ScrollViewer>
+    </Grid>
 </UserControl>

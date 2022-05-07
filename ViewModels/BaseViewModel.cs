@@ -1,6 +1,8 @@
 ﻿using AutoPartsApp.Models.Entities;
 using AutoPartsApp.Models.Specific;
 using AutoPartsApp.Services;
+using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -33,6 +35,22 @@ namespace AutoPartsApp.ViewModels
         public bool IsRefreshing { get; set; }
 
         public string Title { get; set; }
+
+        protected bool SetProperty<T>(ref T backingStore, T value,
+           [CallerMemberName] string propertyName = "",
+           Action onChanged = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+            {
+                return false;
+            }
+
+            backingStore = value;
+            onChanged?.Invoke();
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

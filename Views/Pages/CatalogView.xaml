@@ -24,8 +24,19 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <UniformGrid Columns="2"
+                     Margin="5"
+                     VerticalAlignment="Center">
+            <TextBox Text="{Binding PriceSearchTextInRubles, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Поиск по цене"
+                     materialDesign:HintAssist.HelperText="* в рублях" />
+            <TextBox Text="{Binding BaseCodeSearchText, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Поиск по основному коду"
+                     materialDesign:HintAssist.HelperText="* в рублях" />
+        </UniformGrid>
         <ScrollViewer Grid.Row="1">
-            <controls:CatalogControl Parts="{Binding Parts}" IsAnalogue="True"/>
+            <controls:CatalogControl Parts="{Binding Parts}"
+                                     IsAnalogue="True" />
         </ScrollViewer>
     </Grid>
 </UserControl>
