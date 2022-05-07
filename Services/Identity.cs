@@ -1,4 +1,4 @@
-﻿using AutoPartsApp.Models;
+﻿using AutoPartsApp.Models.Entities;
 using AutoPartsApp.Properties;
 using Newtonsoft.Json;
 using System;

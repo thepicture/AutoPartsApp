@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:AutoPartsApp"
         xmlns:viewmodels="clr-namespace:AutoPartsApp.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1000"
+        Title="MainWindow"
+        Height="750" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="800"
+        MinHeight="750"
+        Icon="/AutoPartsApp;component/Resources/wrench.png"
+        
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -14,11 +21,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        WindowStartupLocation="CenterScreen"
-        MinWidth="800"
-        MinHeight="450"
-        Icon="/AutoPartsApp;component/Resources/wrench.png">
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <Window.DataContext>
         <viewmodels:NavigationViewModel />
     </Window.DataContext>

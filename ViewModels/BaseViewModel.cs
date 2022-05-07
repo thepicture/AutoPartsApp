@@ -1,8 +1,8 @@
-﻿using AutoPartsApp.Models;
+﻿using AutoPartsApp.Models.Entities;
+using AutoPartsApp.Models.Specific;
 using AutoPartsApp.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 
 namespace AutoPartsApp.ViewModels
 {
@@ -15,6 +15,12 @@ namespace AutoPartsApp.ViewModels
            DependencyService.Get<IIdentity<User>>();
         public IFeedbackService FeedbackService =>
            DependencyService.Get<IFeedbackService>();
+        public IRepository<UserRole> UserRoleRepository =>
+           DependencyService.Get<IRepository<UserRole>>();
+        public IRepository<RegisterUser> RegistrationRepository =>
+           DependencyService.Get<IRepository<RegisterUser>>();
+        public IHashGenerator HashGenerator =>
+           DependencyService.Get<IHashGenerator>();
 
         public bool IsBusy { get; set; }
         public bool IsNotBusy => !IsBusy;
@@ -22,14 +28,7 @@ namespace AutoPartsApp.ViewModels
 
         public BaseViewModel()
         {
-            if (DesignerProperties.GetIsInDesignMode(
-                new DependencyObject()))
-            {
-                _ = typeof(App)
-                    .GetMethod("OnStartup")
-                    .Invoke(
-                        new App(), null);
-            }
+
         }
 
         public string Title { get; set; }

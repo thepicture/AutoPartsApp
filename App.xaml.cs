@@ -17,6 +17,10 @@ namespace AutoPartsApp
             DependencyService.Register<MessageBoxFeedbackService>();
             DependencyService.Register<Identity>();
 
+            DependencyService.Register<UserRoleRepository>();
+            DependencyService.Register<RegistrationRepository>();
+            DependencyService.Register<HashGenerator>();
+
             DependencyService.Get<INavigationService<BaseViewModel>>()
                    .Navigate<LoginViewModel>();
             if (!string.IsNullOrWhiteSpace(
