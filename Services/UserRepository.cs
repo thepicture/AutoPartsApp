@@ -27,6 +27,8 @@ namespace AutoPartsApp.Services
                 {
                     return entities.Users
                     .Include(u => u.UserRole)
+                    .Include(u => u.Feedbacks)
+                    .Include(u => u.Feedbacks1)
                     .ToList();
                 }
             });
@@ -52,7 +54,9 @@ namespace AutoPartsApp.Services
                 using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
                 {
                     User currentUser = entities.Users.Find(item.Id);
-                    entities.Entry(currentUser).CurrentValues.SetValues(item);
+                    entities
+                        .Entry(currentUser).CurrentValues
+                        .SetValues(item);
                     try
                     {
                         entities.SaveChanges();

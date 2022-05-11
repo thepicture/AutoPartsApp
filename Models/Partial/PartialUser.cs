@@ -1,5 +1,6 @@
 ﻿using AutoPartsApp.Services;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AutoPartsApp.Models.Entities
@@ -87,5 +88,19 @@ namespace AutoPartsApp.Models.Entities
         }
 
         public string Error => throw new System.NotImplementedException();
+        public bool IsMeHasUnread
+        {
+            get
+            {
+                if (DependencyService.Get<IIdentity<User>>().WeakTarget is User me)
+                {
+                    return Feedbacks.Any(f => !f.IsWatched && f.ReceiverUserId == me.Id);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

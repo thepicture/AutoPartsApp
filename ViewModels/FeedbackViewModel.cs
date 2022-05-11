@@ -3,6 +3,7 @@ using AutoPartsApp.Models.Entities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AutoPartsApp.ViewModels
@@ -14,12 +15,14 @@ namespace AutoPartsApp.ViewModels
         {
             Title = "Обратная связь";
             MyFeedbacks = new ObservableCollection<Feedback>();
-            UsersToWhoICanSend = new ObservableCollection<User>();
-            LoadMyFeedbacksAsync();
-            LoadUsersToWhoICanSendAsync();
+            LoadUsersToWhoICanSendAsync()
+                .ContinueWith(t =>
+                {
+                    LoadDialogueAsync();
+                });
         }
 
-        private async void LoadUsersToWhoICanSendAsync()
+        private async Task LoadUsersToWhoICanSendAsync()
         {
             IEnumerable<User> currentUsers = await UserRepository.GetAllAsync();
             currentUsers = currentUsers.Where(u =>
@@ -29,15 +32,20 @@ namespace AutoPartsApp.ViewModels
             UsersToWhoICanSend = new ObservableCollection<User>(currentUsers);
         }
 
-        private async void LoadMyFeedbacksAsync()
+        private async void LoadDialogueAsync()
         {
-            IEnumerable<Feedback> currentFeedbacks =
-                await FeedbackRepository.GetAllAsync();
-            currentFeedbacks = currentFeedbacks.Where(f =>
+            if (CurrentInterlocutor == null)
             {
-                return f.ReceiverUserId == Identity.WeakTarget.Id || f.SenderUserId == Identity.WeakTarget.Id;
+                return;
+            }
+            IEnumerable<Feedback> currentDialogue =
+                await FeedbackRepository.GetAllAsync();
+            currentDialogue = currentDialogue.Where(f =>
+            {
+                return (f.SenderUserId == CurrentInterlocutor.Id && f.ReceiverUserId == Identity.WeakTarget.Id)
+                       || (f.SenderUserId == Identity.WeakTarget.Id && f.ReceiverUserId == CurrentInterlocutor.Id);
             });
-            MyFeedbacks = new ObservableCollection<Feedback>(currentFeedbacks);
+            MyFeedbacks = new ObservableCollection<Feedback>(currentDialogue);
         }
 
         public ObservableCollection<User> UsersToWhoICanSend { get; set; }
@@ -58,11 +66,53 @@ namespace AutoPartsApp.ViewModels
 
         private async void SendFeedbackAsync()
         {
+            CurrentFeedback.User1 = CurrentInterlocutor;
             if (await FeedbackRepository.CreateAsync(CurrentFeedback))
             {
                 CurrentFeedback = new Feedback();
-                LoadMyFeedbacksAsync();
+                LoadDialogueAsync();
             }
+        }
+
+        private Command openDialogCommand;
+        private User currentInterlocutor;
+
+        public ICommand OpenDialogCommand
+        {
+            get
+            {
+                if (openDialogCommand == null)
+                    openDialogCommand = new Command(OpenDialog);
+
+                return openDialogCommand;
+            }
+        }
+
+        public User CurrentInterlocutor
+        {
+            get => currentInterlocutor;
+            set
+            {
+                if (SetProperty(ref currentInterlocutor, value))
+                {
+                    LoadDialogueAsync();
+                }
+            }
+        }
+
+        private async void OpenDialog(object param)
+        {
+            User currentInterlocutor = param as User;
+            using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
+            {
+                entities.Users
+                    .Find(currentInterlocutor.Id).Feedbacks
+                    .ToList()
+                    .ForEach(f => f.IsWatched = true);
+                entities.SaveChanges();
+            }
+            await LoadUsersToWhoICanSendAsync();
+            CurrentInterlocutor = currentInterlocutor;
         }
     }
 }

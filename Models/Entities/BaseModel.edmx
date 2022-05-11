@@ -32,6 +32,7 @@
           <Property Name="ReceiverUserId" Type="int" Nullable="false" />
           <Property Name="Message" Type="nvarchar" MaxLength="2048" Nullable="false" />
           <Property Name="PostingDateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsWatched" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -287,6 +288,7 @@
           <Property Name="ReceiverUserId" Type="Int32" Nullable="false" />
           <Property Name="Message" Type="String" Nullable="false" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="PostingDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsWatched" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="AutoPartsBaseModel.FK_Feedback_User" FromRole="Feedback" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="AutoPartsBaseModel.FK_Feedback_User1" FromRole="Feedback" ToRole="User" />
         </EntityType>
@@ -474,6 +476,7 @@
           <EntitySetMapping Name="Feedbacks">
             <EntityTypeMapping TypeName="AutoPartsBaseModel.Feedback">
               <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="IsWatched" ColumnName="IsWatched" />
                 <ScalarProperty Name="PostingDateTime" ColumnName="PostingDateTime" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="ReceiverUserId" ColumnName="ReceiverUserId" />

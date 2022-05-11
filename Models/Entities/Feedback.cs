@@ -19,6 +19,7 @@ namespace AutoPartsApp.Models.Entities
         public int ReceiverUserId { get; set; }
         public string Message { get; set; }
         public System.DateTime PostingDateTime { get; set; }
+        public bool IsWatched { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
