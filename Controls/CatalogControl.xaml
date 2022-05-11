@@ -120,8 +120,15 @@
                                 <Button CommandParameter="{Binding .}"
                                         Command="{Binding DataContext.GoToAnaloguesCommand, ElementName=Control}"
                                         Content="Аналоги"
-                                        Style="{StaticResource MaterialDesignFlatButton}"
-                                        Opacity="{Binding IsAnalogue, ElementName=Control}" />
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    <Button.Visibility>
+                                        <Binding Path="IsAnalogue" ElementName="Control">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Button.Visibility>
+                                </Button>
                             </StackPanel>
                         </materialDesign:Card>
                     </materialDesign:Flipper.BackContent>

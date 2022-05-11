@@ -1,7 +1,9 @@
-﻿using AutoPartsApp.Models.Entities;
+﻿using AutoPartsApp.Commands;
+using AutoPartsApp.Models.Entities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace AutoPartsApp.ViewModels
 {
@@ -70,10 +72,23 @@ namespace AutoPartsApp.ViewModels
             get => baseCodeSearchText;
             set
             {
-                if(SetProperty(ref baseCodeSearchText, value))
+                if (SetProperty(ref baseCodeSearchText, value))
                 {
                     LoadPartsAsync();
                 }
+            }
+        }
+
+        private Command goToAnaloguesCommand;
+
+        public ICommand GoToAnaloguesCommand
+        {
+            get
+            {
+                if (goToAnaloguesCommand == null)
+                    goToAnaloguesCommand = new Command(() => { });
+
+                return goToAnaloguesCommand;
             }
         }
     }
