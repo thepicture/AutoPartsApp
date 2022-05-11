@@ -21,7 +21,7 @@
                   Margin="20">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="1" />
+                <UniformGrid Columns="3" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.Style>
@@ -47,12 +47,13 @@
             <DataTemplate>
                 <materialDesign:Flipper MouseDown="OnMouseDown"
                                         Height="310"
-                                        Margin="10"
+                                        MaxWidth="600"
+                                        Margin="20"
                                         Cursor="Hand">
                     <materialDesign:Flipper.FrontContent>
                         <GroupBox Header="{Binding Title}">
-                            <Ellipse Width="200"
-                                     Height="200"
+                            <Ellipse Width="230"
+                                     Height="230"
                                      MouseDown="OnChangeImage">
                                 <Ellipse.Fill>
                                     <ImageBrush Stretch="UniformToFill">
@@ -123,7 +124,8 @@
                                         Content="Аналоги"
                                         Style="{StaticResource MaterialDesignFlatButton}">
                                     <Button.Visibility>
-                                        <Binding Path="IsAnalogue" ElementName="Control">
+                                        <Binding Path="IsAnalogue"
+                                                 ElementName="Control">
                                             <Binding.Converter>
                                                 <BooleanToVisibilityConverter />
                                             </Binding.Converter>
