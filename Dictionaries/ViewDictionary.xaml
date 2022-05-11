@@ -21,6 +21,12 @@
         <views:ContactsView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:FeedbackViewModel}">
-        <views:FeedbackView/>
+        <views:FeedbackView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:CategoriesViewModel}">
+        <views:CategoriesView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:SubCategoriesViewModel}">
+        <views:SubCategoriesView />
     </DataTemplate>
 </ResourceDictionary>

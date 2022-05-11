@@ -65,22 +65,22 @@ namespace AutoPartsApp.ViewModels
             }
         }
 
-        private Command goToCatalogViewModel;
+        private Command goToCategoriesViewModel;
 
-        public ICommand GoToCatalogViewModel
+        public ICommand GoToCategoriesViewModel
         {
             get
             {
-                if (goToCatalogViewModel == null)
-                    goToCatalogViewModel = new Command(PerformGoToCatalogViewModel);
+                if (goToCategoriesViewModel == null)
+                    goToCategoriesViewModel = new Command(PerformGoToCategoriesViewModel);
 
-                return goToCatalogViewModel;
+                return goToCategoriesViewModel;
             }
         }
 
-        private void PerformGoToCatalogViewModel()
+        private void PerformGoToCategoriesViewModel()
         {
-            NavigationService.Navigate<CatalogViewModel>();
+            NavigationService.Navigate<CategoriesViewModel>();
         }
 
         private Command goToContactsViewModel;

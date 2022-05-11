@@ -24,8 +24,8 @@
                   MaxWidth="500"
                   Margin="0 0 0 20">
             <StackPanel>
-                <Button Command="{Binding GoToCatalogViewModel}"
-                        Content="Каталог" 
+                <Button Command="{Binding GoToCategoriesViewModel}"
+                        Content="Категории" 
                         Margin="5"/>
                 <Button Command="{Binding GoToContactsViewModel}"
                         Content="Контакты" 

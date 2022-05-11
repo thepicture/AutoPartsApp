@@ -12,22 +12,19 @@ namespace AutoPartsApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Part
+    public partial class Category
     {
-        public int Id { get; set; }
-        public string InnerCode { get; set; }
-        public string BaseCode { get; set; }
-        public int ProviderId { get; set; }
-        public int ManufacturerId { get; set; }
-        public string Title { get; set; }
-        public int CountInStock { get; set; }
-        public decimal PriceOfStockInRubles { get; set; }
-        public decimal PricePerUnitInRubles { get; set; }
-        public byte[] Image { get; set; }
-        public int SubCategoryId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Category()
+        {
+            this.SubCategories = new HashSet<SubCategory>();
+        }
     
-        public virtual Manufacturer Manufacturer { get; set; }
-        public virtual Provider Provider { get; set; }
-        public virtual SubCategory SubCategory { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public byte[] Image { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubCategory> SubCategories { get; set; }
     }
 }

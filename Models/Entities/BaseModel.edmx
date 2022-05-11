@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AutoPartsBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Image" Type="image" />
+        </EntityType>
         <EntityType Name="Contact">
           <Key>
             <PropertyRef Name="Id" />
@@ -46,6 +54,7 @@
           <Property Name="PriceOfStockInRubles" Type="money" Nullable="false" />
           <Property Name="PricePerUnitInRubles" Type="money" Nullable="false" />
           <Property Name="Image" Type="image" />
+          <Property Name="SubCategoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Provider">
           <Key>
@@ -53,6 +62,15 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -123,6 +141,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Part_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+          <End Role="Part" Type="Self.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="SubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_UserRole">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -136,11 +178,13 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AutoPartsBaseModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Part" EntityType="Self.Part" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Feedback_User" Association="Self.FK_Feedback_User">
@@ -159,6 +203,14 @@
             <End Role="Provider" EntitySet="Provider" />
             <End Role="Part" EntitySet="Part" />
           </AssociationSet>
+          <AssociationSet Name="FK_Part_SubCategory" Association="Self.FK_Part_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Part" EntitySet="Part" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategory_Category" Association="Self.FK_SubCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="SubCategory" EntitySet="SubCategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="Self.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="User" EntitySet="User" />
@@ -169,13 +221,19 @@
     <edmx:ConceptualModels>
       <Schema Namespace="AutoPartsBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AutoPartsBaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="AutoPartsBaseModel.Category" />
           <EntitySet Name="Contacts" EntityType="AutoPartsBaseModel.Contact" />
           <EntitySet Name="Feedbacks" EntityType="AutoPartsBaseModel.Feedback" />
           <EntitySet Name="Manufacturers" EntityType="AutoPartsBaseModel.Manufacturer" />
           <EntitySet Name="Parts" EntityType="AutoPartsBaseModel.Part" />
           <EntitySet Name="Providers" EntityType="AutoPartsBaseModel.Provider" />
+          <EntitySet Name="SubCategories" EntityType="AutoPartsBaseModel.SubCategory" />
           <EntitySet Name="Users" EntityType="AutoPartsBaseModel.User" />
           <EntitySet Name="UserRoles" EntityType="AutoPartsBaseModel.UserRole" />
+          <AssociationSet Name="FK_SubCategory_Category" Association="AutoPartsBaseModel.FK_SubCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="SubCategory" EntitySet="SubCategories" />
+          </AssociationSet>
           <AssociationSet Name="FK_Feedback_User" Association="AutoPartsBaseModel.FK_Feedback_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Feedback" EntitySet="Feedbacks" />
@@ -192,11 +250,24 @@
             <End Role="Provider" EntitySet="Providers" />
             <End Role="Part" EntitySet="Parts" />
           </AssociationSet>
+          <AssociationSet Name="FK_Part_SubCategory" Association="AutoPartsBaseModel.FK_Part_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategories" />
+            <End Role="Part" EntitySet="Parts" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_UserRole" Association="AutoPartsBaseModel.FK_User_UserRole">
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="SubCategories" Relationship="AutoPartsBaseModel.FK_SubCategory_Category" FromRole="Category" ToRole="SubCategory" />
+        </EntityType>
         <EntityType Name="Contact">
           <Key>
             <PropertyRef Name="Id" />
@@ -241,8 +312,10 @@
           <Property Name="PriceOfStockInRubles" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="PricePerUnitInRubles" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Manufacturer" Relationship="AutoPartsBaseModel.FK_Part_Manufacturer" FromRole="Part" ToRole="Manufacturer" />
           <NavigationProperty Name="Provider" Relationship="AutoPartsBaseModel.FK_Part_Provider" FromRole="Part" ToRole="Provider" />
+          <NavigationProperty Name="SubCategory" Relationship="AutoPartsBaseModel.FK_Part_SubCategory" FromRole="Part" ToRole="SubCategory" />
         </EntityType>
         <EntityType Name="Provider">
           <Key>
@@ -251,6 +324,17 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Parts" Relationship="AutoPartsBaseModel.FK_Part_Provider" FromRole="Provider" ToRole="Part" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="AutoPartsBaseModel.FK_SubCategory_Category" FromRole="SubCategory" ToRole="Category" />
+          <NavigationProperty Name="Parts" Relationship="AutoPartsBaseModel.FK_Part_SubCategory" FromRole="SubCategory" ToRole="Part" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -277,6 +361,18 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="AutoPartsBaseModel.FK_User_UserRole" FromRole="UserRole" ToRole="User" />
         </EntityType>
+        <Association Name="FK_SubCategory_Category">
+          <End Type="AutoPartsBaseModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="AutoPartsBaseModel.SubCategory" Role="SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Feedback_User">
           <End Type="AutoPartsBaseModel.User" Role="User" Multiplicity="1" />
           <End Type="AutoPartsBaseModel.Feedback" Role="Feedback" Multiplicity="*" />
@@ -325,6 +421,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Part_SubCategory">
+          <End Type="AutoPartsBaseModel.SubCategory" Role="SubCategory" Multiplicity="1" />
+          <End Type="AutoPartsBaseModel.Part" Role="Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="SubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_UserRole">
           <End Type="AutoPartsBaseModel.UserRole" Role="UserRole" Multiplicity="1" />
           <End Type="AutoPartsBaseModel.User" Role="User" Multiplicity="*" />
@@ -343,6 +451,15 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AutoPartsBaseModelStoreContainer" CdmEntityContainer="AutoPartsBaseEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="AutoPartsBaseModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Contacts">
             <EntityTypeMapping TypeName="AutoPartsBaseModel.Contact">
               <MappingFragment StoreEntitySet="Contact">
@@ -376,6 +493,7 @@
           <EntitySetMapping Name="Parts">
             <EntityTypeMapping TypeName="AutoPartsBaseModel.Part">
               <MappingFragment StoreEntitySet="Part">
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="PricePerUnitInRubles" ColumnName="PricePerUnitInRubles" />
                 <ScalarProperty Name="PriceOfStockInRubles" ColumnName="PriceOfStockInRubles" />
@@ -392,6 +510,16 @@
           <EntitySetMapping Name="Providers">
             <EntityTypeMapping TypeName="AutoPartsBaseModel.Provider">
               <MappingFragment StoreEntitySet="Provider">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategories">
+            <EntityTypeMapping TypeName="AutoPartsBaseModel.SubCategory">
+              <MappingFragment StoreEntitySet="SubCategory">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

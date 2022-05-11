@@ -45,6 +45,8 @@ namespace AutoPartsApp
             DependencyService.Register<PartRepository>();
             DependencyService.Register<ContactsRepository>();
             DependencyService.Register<FeedbackRepository>();
+            DependencyService.Register<CategoriesRepository>();
+            DependencyService.Register<SubCategoriesRepository>();
 
             DependencyService.Get<INavigationService<BaseViewModel>>()
                    .Navigate<LoginViewModel>();

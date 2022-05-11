@@ -1,8 +1,8 @@
 ﻿using AutoPartsApp.Models.Entities;
 using AutoPartsApp.Models.Specific;
 using AutoPartsApp.Services;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -33,6 +33,10 @@ namespace AutoPartsApp.ViewModels
            DependencyService.Get<IRepository<Contact>>();
         public IRepository<Feedback> FeedbackRepository =>
            DependencyService.Get<IRepository<Feedback>>();
+        public IRepository<Category> CategoriesRepository =>
+           DependencyService.Get<IRepository<Category>>();
+        public IRepository<SubCategory> SubCategoriesRepository =>
+           DependencyService.Get<IRepository<SubCategory>>();
 
         public bool IsBusy { get; set; }
         public bool IsNotBusy => !IsBusy;

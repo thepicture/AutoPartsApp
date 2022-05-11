@@ -10,10 +10,11 @@ namespace AutoPartsApp.ViewModels
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class CatalogViewModel : BaseViewModel
     {
-        public CatalogViewModel()
+        public CatalogViewModel(SubCategory subCategory)
         {
             Title = "Каталог";
             LoadPartsAsync();
+            SubCategory = subCategory;
         }
 
         public async void LoadPartsAsync()
@@ -40,6 +41,7 @@ namespace AutoPartsApp.ViewModels
                            || p.PriceOfStockInRubles <= parsedSearchRubles;
                 });
             }
+            currentParts = currentParts.Where(p => p.SubCategoryId == SubCategory.Id);
             Parts = new ObservableCollection<Part>(currentParts);
         }
 
@@ -61,7 +63,7 @@ namespace AutoPartsApp.ViewModels
         private void GoToAnalogues(object parameter)
         {
             NavigationService
-                .NavigateWithParameter<AnalogViewModel, Part>(parameter as Part);
+                .NavigateWithParameter<AnalogViewModel, object[]>(new object[] { parameter as Part, SubCategory });
         }
 
         private string priceSearchTextInRubles;
@@ -91,5 +93,7 @@ namespace AutoPartsApp.ViewModels
                 }
             }
         }
+
+        public SubCategory SubCategory { get; }
     }
 }

@@ -11,10 +11,13 @@ namespace AutoPartsApp.ViewModels
     public class AnalogViewModel : BaseViewModel
     {
         public Part ReferencePart { get; set; }
-        public AnalogViewModel(Part referencePart)
+        public SubCategory SubCategory { get; }
+
+        public AnalogViewModel(object[] referencePartAndSubCategory)
         {
-            Title = $"Аналоги запчасти {referencePart.Title}";
-            ReferencePart = referencePart;
+            ReferencePart = referencePartAndSubCategory[0] as Part;
+            Title = $"Аналоги запчасти {ReferencePart.Title}";
+            SubCategory = referencePartAndSubCategory[1] as SubCategory;
             LoadPartsAsync();
         }
 
@@ -45,7 +48,7 @@ namespace AutoPartsApp.ViewModels
                            || p.PriceOfStockInRubles <= parsedSearchRubles;
                 });
             }
-
+            currentParts = currentParts.Where(p => p.SubCategoryId == SubCategory.Id);
             Parts = new ObservableCollection<Part>(currentParts);
         }
 

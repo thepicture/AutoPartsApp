@@ -5,17 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8c6d800918ad4eefbdfae2cbc0dba486" Name="Diagram1">
-        <EntityTypeShape EntityType="AutoPartsBaseModel.Contact" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AutoPartsBaseModel.Category" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="AutoPartsBaseModel.Contact" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="AutoPartsBaseModel.Feedback" Width="1.5" PointX="5.25" PointY="1.5" />
-        <EntityTypeShape EntityType="AutoPartsBaseModel.Manufacturer" Width="1.5" PointX="0.75" PointY="9.875" />
-        <EntityTypeShape EntityType="AutoPartsBaseModel.Part" Width="1.5" PointX="3" PointY="6" />
-        <EntityTypeShape EntityType="AutoPartsBaseModel.Provider" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="AutoPartsBaseModel.Manufacturer" Width="1.5" PointX="3" PointY="9.875" />
+        <EntityTypeShape EntityType="AutoPartsBaseModel.Part" Width="1.5" PointX="5.25" PointY="6" />
+        <EntityTypeShape EntityType="AutoPartsBaseModel.Provider" Width="1.5" PointX="3" PointY="12.25" />
+        <EntityTypeShape EntityType="AutoPartsBaseModel.SubCategory" Width="1.5" PointX="3" PointY="6.75" />
         <EntityTypeShape EntityType="AutoPartsBaseModel.User" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="AutoPartsBaseModel.UserRole" Width="1.5" PointX="0.75" PointY="1.875" />
+        <AssociationConnector Association="AutoPartsBaseModel.FK_SubCategory_Category" />
         <AssociationConnector Association="AutoPartsBaseModel.FK_Feedback_User" />
         <AssociationConnector Association="AutoPartsBaseModel.FK_Feedback_User1" />
         <AssociationConnector Association="AutoPartsBaseModel.FK_Part_Manufacturer" />
         <AssociationConnector Association="AutoPartsBaseModel.FK_Part_Provider" />
+        <AssociationConnector Association="AutoPartsBaseModel.FK_Part_SubCategory" />
         <AssociationConnector Association="AutoPartsBaseModel.FK_User_UserRole" />
       </Diagram>
     </edmx:Diagrams>

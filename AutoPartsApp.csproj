@@ -108,6 +108,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\CategoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\ContactsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\RegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\SubCategoriesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,6 +160,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Category.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Contact.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
@@ -165,6 +176,9 @@
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Provider.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\SubCategory.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\User.cs">
@@ -183,6 +197,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CategoriesRepository.cs" />
     <Compile Include="Services\ContactsRepository.cs" />
     <Compile Include="Services\DependencyService.cs" />
     <Compile Include="Services\FeedbackRepository.cs" />
@@ -198,6 +213,7 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\PartRepository.cs" />
     <Compile Include="Services\RegistrationRepository.cs" />
+    <Compile Include="Services\SubCategoriesRepository.cs" />
     <Compile Include="Services\UserRepository.cs" />
     <Compile Include="Services\UserRoleRepository.cs" />
     <Compile Include="Utils\ObservableStack.cs" />
@@ -205,11 +221,13 @@
     <Compile Include="ViewModels\AnalogViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CatalogViewModel.cs" />
+    <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\ContactsViewModel.cs" />
     <Compile Include="ViewModels\FeedbackViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\SubCategoriesViewModel.cs" />
     <Compile Include="Views\Pages\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
@@ -218,6 +236,9 @@
     </Compile>
     <Compile Include="Views\Pages\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\CategoriesView.xaml.cs">
+      <DependentUpon>CategoriesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\ContactsView.xaml.cs">
       <DependentUpon>ContactsView.xaml</DependentUpon>
@@ -230,6 +251,9 @@
     </Compile>
     <Compile Include="Views\Pages\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\SubCategoriesView.xaml.cs">
+      <DependentUpon>SubCategoriesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\NavigationWindow.xaml.cs">
       <DependentUpon>NavigationWindow.xaml</DependentUpon>
