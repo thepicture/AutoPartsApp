@@ -1,6 +1,7 @@
 ﻿using AutoPartsApp.Commands;
 using AutoPartsApp.Models.Entities;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace AutoPartsApp.ViewModels
@@ -42,9 +43,23 @@ namespace AutoPartsApp.ViewModels
 
         private void PerformGoToSubCategoriesViewModel(object param)
         {
-            NavigationService
-                .NavigateWithParameter<SubCategoriesViewModel, Category>(
-                    param as Category);
+            Category inputCategory = param as Category;
+            using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
+            {
+                SubCategory subCategoryFromDb = entities.SubCategories
+                    .FirstOrDefault(sc => sc.Title == inputCategory.Title);
+                if (subCategoryFromDb != null)
+                {
+                    NavigationService
+                        .NavigateWithParameter<CatalogViewModel, SubCategory>(subCategoryFromDb);
+                }
+                else
+                {
+                    NavigationService
+                        .NavigateWithParameter<SubCategoriesViewModel, Category>(
+                            param as Category);
+                }
+            }
         }
     }
 }
