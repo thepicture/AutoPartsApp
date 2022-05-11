@@ -1,9 +1,12 @@
 ﻿using AutoPartsApp.Models.Entities;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace AutoPartsApp.Controls
 {
@@ -54,6 +57,25 @@ namespace AutoPartsApp.Controls
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ((dynamic)DataContext).LoadPartsAsync();
+        }
+
+        private void OnChangeImage(object sender, MouseButtonEventArgs e)
+        {
+            using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
+            {
+                OpenFileDialog imageFileDialog = new OpenFileDialog
+                {
+                    Title = "Выберите фото"
+                };
+                bool? isSelectedImage = imageFileDialog.ShowDialog();
+                if (isSelectedImage.HasValue && isSelectedImage.Value)
+                {
+                    var part = (sender as Ellipse).DataContext as Part;
+                    entities.Parts.Find(part.Id).Image = File.ReadAllBytes(imageFileDialog.FileName);
+                    entities.SaveChanges();
+                    ((dynamic)DataContext).LoadPartsAsync();
+                }
+            }
         }
     }
 }

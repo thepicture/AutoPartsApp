@@ -52,7 +52,8 @@
                     <materialDesign:Flipper.FrontContent>
                         <GroupBox Header="{Binding Title}">
                             <Ellipse Width="200"
-                                     Height="200">
+                                     Height="200"
+                                     MouseDown="OnChangeImage">
                                 <Ellipse.Fill>
                                     <ImageBrush Stretch="UniformToFill">
                                         <ImageBrush.ImageSource>
