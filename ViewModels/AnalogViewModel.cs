@@ -41,8 +41,8 @@ namespace AutoPartsApp.ViewModels
             {
                 currentParts = currentParts.Where(p =>
                 {
-                    return p.PricePerUnitInRubles == parsedSearchRubles
-                           || p.PriceOfStockInRubles == parsedSearchRubles;
+                    return p.PricePerUnitInRubles <= parsedSearchRubles
+                           || p.PriceOfStockInRubles <= parsedSearchRubles;
                 });
             }
 
