@@ -24,14 +24,7 @@ namespace AutoPartsApp.ViewModels
             IEnumerable<User> currentUsers = await UserRepository.GetAllAsync();
             currentUsers = currentUsers.Where(u =>
             {
-                if (Identity.WeakTarget.UserRole.Title == "Руководитель")
-                {
-                    return u.UserRole.Title == "Администратор";
-                }
-                else
-                {
-                    return u.UserRole.Title == "Руководитель";
-                }
+                return u.Id != Identity.WeakTarget.Id;
             });
             UsersToWhoICanSend = new ObservableCollection<User>(currentUsers);
         }
@@ -42,7 +35,7 @@ namespace AutoPartsApp.ViewModels
                 await FeedbackRepository.GetAllAsync();
             currentFeedbacks = currentFeedbacks.Where(f =>
             {
-                return f.ReceiverUserId == Identity.WeakTarget.Id;
+                return f.ReceiverUserId == Identity.WeakTarget.Id || f.SenderUserId == Identity.WeakTarget.Id;
             });
             MyFeedbacks = new ObservableCollection<Feedback>(currentFeedbacks);
         }
@@ -68,6 +61,7 @@ namespace AutoPartsApp.ViewModels
             if (await FeedbackRepository.CreateAsync(CurrentFeedback))
             {
                 CurrentFeedback = new Feedback();
+                LoadMyFeedbacksAsync();
             }
         }
     }
