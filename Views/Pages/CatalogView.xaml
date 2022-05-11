@@ -31,8 +31,7 @@
                      materialDesign:HintAssist.Hint="Поиск по цене"
                      materialDesign:HintAssist.HelperText="* в рублях" />
             <TextBox Text="{Binding BaseCodeSearchText, UpdateSourceTrigger=PropertyChanged}"
-                     materialDesign:HintAssist.Hint="Поиск по основному коду"
-                     materialDesign:HintAssist.HelperText="* в рублях" />
+                     materialDesign:HintAssist.Hint="Поиск по основному коду" />
         </UniformGrid>
         <ScrollViewer Grid.Row="1">
             <controls:CatalogControl Parts="{Binding Parts}"
