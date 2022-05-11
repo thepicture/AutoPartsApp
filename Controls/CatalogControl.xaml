@@ -17,7 +17,8 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              Name="Control">
-    <ItemsControl ItemsSource="{Binding Parts, ElementName=Control}">
+    <ItemsControl ItemsSource="{Binding Parts, ElementName=Control}"
+                  Margin="20">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <UniformGrid Columns="1" />
