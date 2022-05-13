@@ -25,7 +25,7 @@
         <TextBox Text="{Binding PhoneNumberSearchText, UpdateSourceTrigger=PropertyChanged}"
                  materialDesign:HintAssist.Hint="Поиск по номеру телефона" />
         <ScrollViewer Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding Contacts}">
+            <ItemsControl ItemsSource="{Binding Contacts}" VerticalAlignment="Center">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="2" />
