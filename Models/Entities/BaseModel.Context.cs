@@ -12,19 +12,19 @@ namespace AutoPartsApp.Models.Entities
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class AutoPartsBaseEntities : DbContext
     {
         public AutoPartsBaseEntities()
-            : base("name=AutoPartsBaseEntities")
+            : base(App.CurrentConnectionString)
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }

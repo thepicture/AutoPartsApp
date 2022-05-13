@@ -3,6 +3,7 @@ using AutoPartsApp.Properties;
 using AutoPartsApp.Services;
 using AutoPartsApp.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace AutoPartsApp
@@ -12,25 +13,82 @@ namespace AutoPartsApp
     /// </summary>
     public partial class App : Application
     {
+        private static string currentConnectionString;
+
+        public static string CurrentConnectionString
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(PermamentConnectionString))
+                {
+                    return PermamentConnectionString;
+                }
+                return currentConnectionString;
+            }
+
+            set => currentConnectionString = value;
+        }
+        public static string PermamentConnectionString
+        {
+            get => Settings.Default.WorkingConnectionString;
+            set
+            {
+                Settings.Default.WorkingConnectionString = value;
+                Settings.Default.Save();
+            }
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             DependencyService.Register<MessageBoxFeedbackService>();
-            try
+
+            Stack<string> dataSources = new Stack<string>();
+
+            dataSources.Push($@"{Environment.MachineName}\SQLEXPRESS");
+            dataSources.Push(Environment.MachineName);
+            dataSources.Push(".");
+            dataSources.Push(@".\SQLEXPRESS");
+
+            while (true)
             {
-                using (AutoPartsBaseEntities entities = new AutoPartsBaseEntities())
+                if (!string.IsNullOrWhiteSpace(PermamentConnectionString))
                 {
-                    entities.Database.Connection.Open();
+                    break;
                 }
-            }
-            catch (Exception)
-            {
-                DependencyService
-                    .Get<IFeedbackService>()
-                    .InformErrorAsync("Проверьте подключение к базе данных")
-                    .Wait();
-                return;
+                CurrentConnectionString = $"metadata=res://*/Models.Entities.BaseModel.csdl|res://*/Models.Entities.BaseModel.ssdl|res://*/Models.Entities.BaseModel.msl;"
+                                          + $"provider=System.Data.SqlClient;"
+                                          + $"provider connection string=\"data source={dataSources.Pop()};"
+                                          + $"initial catalog=AutoPartsBase;"
+                                          + $"integrated security=True;"
+                                          + $"MultipleActiveResultSets=True;"
+                                          + $"App=EntityFramework\"";
+                try
+                {
+                    if (dataSources.Count == 0) throw new Exception("Все строки подключения недоступны");
+                    using (AutoPartsBaseEntities db = new AutoPartsBaseEntities())
+                    {
+                        db.Database.Connection.Open();
+                        PermamentConnectionString = CurrentConnectionString;
+                        DependencyService
+                            .Get<IFeedbackService>()
+                            .InformAsync("База данных подключена "
+                                         + "со строкой подключения "
+                                         + PermamentConnectionString);
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (dataSources.Count == 0)
+                    {
+                        DependencyService
+                            .Get<IFeedbackService>()
+                            .InformErrorAsync(ex)
+                            .Wait();
+                        return;
+                    }
+                }
             }
 
             DependencyService.Register<NavigationService>();
