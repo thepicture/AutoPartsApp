@@ -42,16 +42,16 @@
                                                       Command="{Binding DataContext.OpenDialogCommand, ElementName=Control}" />
                                     </materialDesign:Card.InputBindings>
                                     <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
                                         <Ellipse Width="10"
                                                  Height="10"
                                                  Fill="Red"
                                                  HorizontalAlignment="Right"
-                                                 VerticalAlignment="Top" 
-                                                 Opacity="{Binding IsMeHasUnread}"/>
+                                                 VerticalAlignment="Top"
+                                                 Opacity="{Binding IsMeHasUnread}" />
                                         <Ellipse Height="100"
                                                  Width="100">
                                             <Ellipse.Fill>
@@ -68,12 +68,10 @@
                                                 </ImageBrush>
                                             </Ellipse.Fill>
                                         </Ellipse>
-                                        <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto" />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                        </Grid>
+                                        <TextBlock Text="{Binding FullName}"
+                                                   HorizontalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   Grid.Row="1" />
                                     </Grid>
                                 </materialDesign:Card>
                             </DataTemplate>
