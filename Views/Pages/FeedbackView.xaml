@@ -167,6 +167,7 @@
                              Height="100"
                              materialDesign:HintAssist.Hint="Начните вводить сообщение" />
                     <Button Command="{Binding SendFeedbackCommand}"
+                            IsDefault="True"
                             Content="Отправить" />
                 </StackPanel>
             </Grid>
