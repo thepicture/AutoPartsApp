@@ -97,6 +97,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <TextBlock Text="Сообщений нет или диалог не выбран"
+                                                               TextWrapping="Wrap"
                                                                TextAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                Style="{StaticResource MaterialDesignHeadline3TextBlock}" />
