@@ -1,4 +1,5 @@
 ﻿using AutoPartsApp.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,27 +21,25 @@ namespace AutoPartsApp.ViewModels
         {
             IEnumerable<Contact> currentContacts =
                 await ContactsRepository.GetAllAsync();
-            if (!string.IsNullOrWhiteSpace(PhoneNumberSearchText))
+            if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 currentContacts = currentContacts.Where(c =>
                 {
-                    return c.PhoneNumber
-                        .FromPhoneNumberToDigits()
-                        .Contains(
-                            PhoneNumberSearchText.FromPhoneNumberToDigits());
+                    return c.Address.IndexOf(SearchText,
+                                             StringComparison.OrdinalIgnoreCase) != -1;
                 });
             }
             Contacts = new ObservableCollection<Contact>(currentContacts);
         }
 
-        private string phoneNumberSearchText;
+        private string searchText;
 
-        public string PhoneNumberSearchText
+        public string SearchText
         {
-            get => phoneNumberSearchText;
+            get => searchText;
             set
             {
-                if (SetProperty(ref phoneNumberSearchText, value))
+                if (SetProperty(ref searchText, value))
                 {
                     LoadContactsAsync();
                 }
