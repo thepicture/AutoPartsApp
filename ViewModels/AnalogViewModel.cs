@@ -1,5 +1,6 @@
 ﻿using AutoPartsApp.Commands;
 using AutoPartsApp.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,12 +22,17 @@ namespace AutoPartsApp.ViewModels
             LoadPartsAsync();
         }
 
+        private const int MaxPriceOfStockDifference = 1000;
+
         public async void LoadPartsAsync()
         {
             IEnumerable<Part> currentParts =
                 await PartRepository.GetAllAsync();
             currentParts = currentParts.Where(p => p.Id != ReferencePart.Id);
-            currentParts = currentParts.Where(p => p.BaseCode.Contains(ReferencePart.BaseCode));
+            currentParts = currentParts.Where(p =>
+            {
+                return Math.Abs(p.PriceOfStockInRubles - ReferencePart.PriceOfStockInRubles) < MaxPriceOfStockDifference;
+            });
 
             if (!string.IsNullOrWhiteSpace(BaseCodeSearchText))
             {
