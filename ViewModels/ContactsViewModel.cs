@@ -26,7 +26,10 @@ namespace AutoPartsApp.ViewModels
                 currentContacts = currentContacts.Where(c =>
                 {
                     return c.Address.IndexOf(SearchText,
-                                             StringComparison.OrdinalIgnoreCase) != -1;
+                                             StringComparison.OrdinalIgnoreCase) != -1
+                           || SearchText.FromPhoneNumberToDigits().Count() > 0 && c.PhoneNumber
+                                .FromPhoneNumberToDigits()
+                                .Contains(SearchText.FromPhoneNumberToDigits());
                 });
             }
             Contacts = new ObservableCollection<Contact>(currentContacts);

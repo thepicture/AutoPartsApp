@@ -23,7 +23,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                 materialDesign:HintAssist.Hint="Поиск по адресу" />
+                 materialDesign:HintAssist.Hint="Поиск по адресу и/или по номеру телефона" />
         <ScrollViewer Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Contacts}"
                           VerticalAlignment="Center">
