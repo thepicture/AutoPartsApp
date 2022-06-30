@@ -25,11 +25,11 @@
                   Margin="0 0 0 20">
             <StackPanel>
                 <Button Command="{Binding GoToCategoriesViewModel}"
-                        Content="Категории" 
-                        Margin="5"/>
+                        Content="Категории"
+                        Margin="5" />
                 <Button Command="{Binding GoToContactsViewModel}"
-                        Content="Контакты" 
-                        Margin="5"/>
+                        Content="Контакты"
+                        Margin="5" />
                 <Button Command="{Binding GoToFeedbackViewModel}"
                         Content="Обратная связь"
                         Margin="5" />
@@ -45,11 +45,12 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Kind="Email" />
-                    <TextBox Text="{Binding User.Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding User.Email}"
                              materialDesign:HintAssist.Hint="Введите электронную почту"
                              MaxLength="100"
                              Grid.Column="1"
-                             materialDesign:ValidationAssist.UsePopup="True" />
+                             materialDesign:ValidationAssist.UsePopup="True"
+                             IsReadOnly="True" />
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
