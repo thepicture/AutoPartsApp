@@ -67,10 +67,12 @@ namespace AutoPartsApp.ViewModels
 
         private async void RegisterAsync(object obj)
         {
+            IsBusy = true;
             if (await RegistrationRepository.CreateAsync(User))
             {
                 NavigationService.NavigateToRoot();
             }
+            IsBusy = false;
         }
     }
 }

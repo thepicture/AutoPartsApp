@@ -7,7 +7,6 @@
              xmlns:viewmodels="clr-namespace:AutoPartsApp.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:RegisterViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="450"
              d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -115,7 +114,8 @@
                     Content="Выбрать фото"
                     Style="{StaticResource  MaterialDesignFlatSecondaryLightButton}" />
             <Button Command="{Binding RegisterCommand}"
-                    Content="Зарегистрироваться" />
+                    Content="Зарегистрироваться" 
+                    IsEnabled="{Binding IsNotBusy}"/>
         </StackPanel>
     </GroupBox>
 </UserControl>

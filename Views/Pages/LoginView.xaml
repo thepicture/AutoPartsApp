@@ -51,8 +51,9 @@
                              PasswordChanged="OnPasswordChanged" />
             </Grid>
             <Button Command="{Binding LoginCommand}"
-                    Content="Войти" 
-                    IsDefault="True"/>
+                    Content="Войти"
+                    IsDefault="True"
+                    IsEnabled="{Binding IsNotBusy}" />
             <Button Command="{Binding GoToRegisterViewModelCommand}"
                     Content="Cоздать аккаунт"
                     Style="{StaticResource  MaterialDesignFlatSecondaryLightButton}" />
